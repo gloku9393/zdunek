@@ -70,6 +70,7 @@ for i=1:min(16, length(steps))
     P = (Q - mean) * o_e_faces;
     R = P * o_e_faces' + mean;
     imshow(reshape(uint8(normalize(R)), rows, columns));
+    title(sprintf('%i', num_evs))
 end
 
 
