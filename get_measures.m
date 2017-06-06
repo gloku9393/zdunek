@@ -1,0 +1,35 @@
+J = [4 10 20 30];
+classes = [4 6 8 10 15 20];
+idx = 10;
+times_trans = [];
+times_org = [];
+repeats = 10;
+acc_trans = [];
+acc_org = [];
+for c = 1:length(classes)
+    for j = 1:length(J)
+        [images, transImages] = get_train_data(classes(c), idx, J(j));
+        [acc_trans(c,j), times_trans(c,j)] = get_average_result(transImages, classes(c), idx, repeats);
+    end
+    [acc_org(c,:), times_org(c,:)] = get_average_result(images, classes(c), idx, repeats);
+end
+
+figure(1);
+for c=1:length(classes)
+    subplot(2, 3, c);
+    bar([acc_trans(c,:) acc_org(c)])
+    set(gca,'XTickLabel', {'4'; '10'; '20'; '30'; 'Niezmieniony'})
+    title(sprintf('%i klass', classes(c)))
+    xlabel('Ilosc komponentow glownych')
+    ylabel('Dokladnosc [%]')
+end
+
+figure(2);
+for c=1:length(classes)
+    subplot(2, 3, c);
+    bar([times_trans(c,:) times_org(c)])
+    set(gca,'XTickLabel', {'4'; '10'; '20'; '30'; 'Niezmieniony'})
+    title(sprintf('%i klass', classes(c)))
+    xlabel('Ilosc komponentow glownych')
+    ylabel('Czas [s]')
+end
